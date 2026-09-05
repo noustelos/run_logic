@@ -240,6 +240,98 @@ codeDivs.forEach((codeDiv, i) => {
 
 ---
 
+### 12. **Brand Badge Integration** ✅
+**Πρόσθεση:** Προσθήκη brand badge "a noustelos studio project />" στο top της σελίδας.
+**Λεπτομέρειες:**
+- Χρώμα: Πορτοκαλί (`#f97316`) και στις δύο εκδόσεις (Color & B&W)
+- Στυλ: Monospace/terminal αισθητική με `Source Code Pro` font
+- Τοποθέτηση: Κεντραρισμένο στην κορυφή της σελίδας
+- Link: `https://noustelos.gr` με `target="_blank"` και `rel="noopener noreferrer"`
+**Υλοποίηση:**
+- Δημιουργία `<header class="brand-badge">` με το link
+- Στυλ στο `.brand-badge` και `.brand-badge a`
+
+---
+
+### 13. **Theme Toggle Separation** ❌ → ✅
+**Λάθος:** Αρχικά το brand badge τοποθετήθηκε **μέσα** στο theme toggle element.
+**Πρόβλημα:** Το toggle έπαψε να είναι clickable γιατί το brand badge το έκρυβε.
+**Συμπτώματα:**
+- Το theme toggle εμφανίζονταν αλλά δεν αντιδρούσε στα κλικ
+- JavaScript error: "cannot read property of null (reading 'addEventListener')"
+**Διόρθωση:**
+1. Δημιουργία κοινού `top-bar` wrapper με flex layout
+2. Χωρισμός σε δύο ξεχωριστά elements:
+   - `<header class="brand-badge">` (αριστερά)
+   - `<div class="theme-toggle">` (δεξιά)
+3. CSS διορθώσεις:
+   ```css
+   .top-bar {
+       display: flex;
+       justify-content: space-between;
+       align-items: center;
+       width: 100%;
+       padding: 1rem 2rem;
+       z-index: 9999;
+   }
+   .theme-toggle {
+       position: relative;
+       z-index: 9999;
+       pointer-events: auto;
+       cursor: pointer;
+   }
+   .theme-toggle * { pointer-events: auto; }
+   ```
+
+---
+
+### 14. **Glassmorphism Card Styling & Reversion** ❌ → ✅
+**Λάθος:** Προσπάθεια εφαρμογής glassmorphism styling μόνο στην πρώτη κάρτα.
+**Πρόβλημα:** Η πρώτη κάρτα έχασε την διαφάνεια και την ομοιομορφία με τις άλλες.
+**Συμπτώματα:**
+- Η πρώτη κάρτα είχε διαφορετικό visual styling (glassmorphism background)
+- Οι άλλες κάρτες είχαν το αρχικό gradient styling
+- Έλλειπε ομοιογενής εμφάνιση
+**Διόρθωση:**
+1. **Αρχικά:** Εφαρμογή glassmorphism στην πρώτη κάρτα (#codepen)
+2. **Μετά:** Κατάργηση όλων των special styles και ενοποίηση όλων των καρτών
+3. **Τελική λύση:** Όλες οι κάρτες χρησιμοποιούν τα ίδια masks:
+   ```css
+   .card {
+       mask-image: url(#block), url(#htmlMask);
+   }
+   .card::before {
+       mask: url(#htmlMask2);
+   }
+   ```
+
+---
+
+### 15. **Card Content & ID Management** ❌ → ✅
+**Λάθος:** Αλλαγή του id της πρώτης κάρτας από `codepen` σε `html` δημιουργώντας διπλότυπο.
+**Πρόβλημα:** Δύο κάρτες με id="html" στο ίδιο document.
+**Συμπτώματα:**
+- Invalid HTML (διπλότυπα IDs)
+- Απρόβλεπτο behavior των styles
+**Διόρθωση:**
+- Επανεκχώρηση των σωστών IDs: `codepen`, `html`, `css`, `js`
+- Αφαίρεση του κειμένου από την πρώτη κάρτα για ομοιομορφία
+
+---
+
+### 16. **Inline Style Cleanup** ❌ → ✅
+**Λάθος:** Προσθήκη inline styles και `!important` rules προσωρινά.
+**Πρόβλημα:** Δύσκολη συντήρηση και προσπάθεια override των styles.
+**Συμπτώματα:**
+- Δύσκολος καθαρισμός και συγχρονισμός
+- Αντιπαραγωγικό CSS
+**Διόρθωση:**
+- Αφαίρεση όλων των inline styles από τις κάρτες
+- Κεντρικοποίηση όλων των styles στο `styles.css`
+- Χρήση class-based styling αντί για ID-specific
+
+---
+
 ## 📝 Σημαντικές Σημειώσεις (Για να μην ξαναγίνουν)
 
 ### ✅ **Best Practices για Μέλλον**
@@ -269,6 +361,9 @@ codeDivs.forEach((codeDiv, i) => {
 | InnerHTML with special chars | DOM API |
 | z-index conflicts | Σωστή ιεραρχία |
 | Defer + early plugin use | Σωστή σειρά φόρτωσης |
+| Duplicating element IDs | Μοναδικά IDs για κάθε element |
+| Inline !important overrides | Κεντρικό CSS με κλάσεις |
+| Mixing brand and toggle elements | Ξεχωριστούς containers για κάθε λειτουργία |
 
 ---
 
@@ -340,7 +435,11 @@ stagger: 0.005  // Πολύ γρήγορο
 
 *Last updated: 2026-09-05
 *Philosophy: Keep it simple*
-*New: Theme toggle switch with orange monochrome mode*
+*New: Theme toggle switch with orange monochrome mode
+*New: Brand badge integration (noustelos.gr)
+*New: Top-bar layout with brand badge and theme toggle
+*Fixed: Unified card styling across all 4 cards
+*Fixed: Theme toggle clickability and z-index issues
 
 ---
 

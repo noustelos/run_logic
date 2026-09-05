@@ -14,13 +14,59 @@
 }
 
 /* ========================================
+   Brand Badge
+   ======================================== */
+.brand-badge {
+    display: block;
+    position: relative;
+    text-align: center;
+    padding: 12px 0;
+    z-index: 1;
+}
+
+.brand-badge a {
+    font-family: "Source Code Pro", monospace;
+    font-size: 14px;
+    font-weight: 400;
+    color: #f97316;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.brand-badge a:hover {
+    color: #ff8c42;
+}
+
+.badge-mark {
+    color: #f97316;
+    opacity: 0.7;
+}
+
+.brand-badge a:hover .badge-mark {
+    opacity: 1;
+}
+
+/* ========================================
    Theme Toggle Switch
    ======================================== */
+.top-bar {
+    position: relative;
+    width: 100%;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 9999;
+}
+
 .theme-toggle {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 1000;
+    position: relative;
+    z-index: 9999;
+    pointer-events: auto;
+    cursor: pointer;
+}
+.theme-toggle * {
+    pointer-events: auto;
 }
 
 .toggle-switch {
@@ -28,12 +74,15 @@
     align-items: center;
     gap: 8px;
     cursor: pointer;
+    pointer-events: auto;
 }
 
 .toggle-switch input[type="checkbox"] {
     opacity: 0;
     width: 0;
     height: 0;
+    cursor: pointer;
+    pointer-events: auto;
 }
 
 .slider {
@@ -43,6 +92,8 @@
     border-radius: 30px;
     position: relative;
     transition: background-color 0.3s ease;
+    cursor: pointer;
+    pointer-events: auto;
 }
 
 .slider::before {
@@ -268,36 +319,12 @@ main.js-ready {
 /* ========================================
    Card Variants
    ======================================== */
-.card#codepen {
-    background: oklab(50.301% -0.00032 -0.00343 / 0.4);
-    background: radial-gradient(closest-corner, oklab(50.301% -0.00032 -0.00343 / 0.047) 10%, oklab(50.301% -0.00032 -0.00343 / 0.4) 90%),
-    linear-gradient(50deg, oklab(74.255% -0.1471 0.04911 / 0.07) 0%, transparent 25%, transparent 75%, oklab(66.807% 0.13215 -0.11718 / 0.133) 100%);
-    mask-image: url(#block), url(#codepenMask);
-}
-
-.card#codepen::before {
-    mask: url(#codepenMask2);
-}
-
-.card#html {
+.card {
     mask-image: url(#block), url(#htmlMask);
 }
-.card#html::before {
+
+.card::before {
     mask: url(#htmlMask2);
-}
-
-.card#css {
-    mask-image: url(#block), url(#cssMask);
-}
-.card#css::before {
-    mask: url(#cssMask2);
-}
-
-.card#js {
-    mask-image: url(#block), url(#jsMask);
-}
-.card#js::before {
-    mask: url(#jsMask2);
 }
 
 /* ========================================
@@ -469,4 +496,21 @@ body.bw-mode .toggle-switch input[type="checkbox"]:checked + .slider + .color-la
 
 body.bw-mode .toggle-switch input[type="checkbox"]:checked + .slider {
     background-color: #4a3020;
+}
+
+body.bw-mode .brand-badge a {
+    color: #ff8c42;
+}
+
+body.bw-mode .brand-badge a:hover {
+    color: #ffa580;
+}
+
+body.bw-mode .badge-mark {
+    color: #ff8c42;
+    opacity: 0.7;
+}
+
+body.bw-mode .brand-badge a:hover .badge-mark {
+    opacity: 1;
 }
