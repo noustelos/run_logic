@@ -75,7 +75,6 @@ function init() {
     });
 
     setupScrollAnimations();
-    setupThemeToggle();
 }
 
 function writeText(i) {
@@ -103,25 +102,10 @@ function setupScrollAnimations() {
         onUpdate: (self) => {
             let thisProgress = self.progress;
             let tabletVerMovement = 0.65 * window.innerHeight;
-            let scrollProgress = - (2400 * thisProgress);
+            let scrollProgress = - (7200 * thisProgress);
             gsap.set("body", { "--strokeDashoffset": scrollProgress });
             let scrollProgress2 = - parseInt(tabletVerMovement * thisProgress) + "px";
             gsap.set("body", { "--tabletVerticaloffset": scrollProgress2 });
         }
     });
-}
-
-function setupThemeToggle() {
-    const toggle = document.getElementById('bw-toggle');
-    const body = document.body;
-    
-    if (toggle && body) {
-        toggle.addEventListener('change', function() {
-            if (this.checked) {
-                body.classList.add('bw-mode');
-            } else {
-                body.classList.remove('bw-mode');
-            }
-        });
-    }
 }

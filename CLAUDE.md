@@ -1,9 +1,9 @@
-# Mistral Vibe Guidelines
+# Claude Code Guidelines
 
 > **Repository:** [https://github.com/noustelos/run_logic](https://github.com/noustelos/run_logic)
 > **Live Sandbox:** ✅ Το project είναι live και χρησιμοποιείται για συνεργασία
 
-Αυτό το αρχείο περιέχει **οδηγίες για τον Mistral Vibe agent** καθώς και **εργασίες σε εκκρεμότητα (pending tasks)** για το project *Run Logic*.
+Αυτό το αρχείο περιέχει **οδηγίες για τον Claude Code agent** καθώς και **εργασίες σε εκκρεμότητα (pending tasks)** για το project *Run Logic*.
 
 ---
 
@@ -20,7 +20,7 @@
 
 ---
 
-## 📌 Κανόνες για τον Mistral Vibe
+## 📌 Κανόνες για τον Claude Code
 
 - **Πάντα ζήτα επιβεβαίωση** πριν εκτελέσεις ενέργειες με μεγάλο "blast radius":
   - `git push` (εκτός αν ζητηθεί εξωριστικά "commit and push")
@@ -64,7 +64,8 @@
 - [ ] Προσθήκη σχολίων στον κώδικα
 
 ### Medium Priority  
-- [ ] Προσθήκη νέων καρτών (π.χ. React, Vue)
+- [x] Προσθήκη νέων καρτών — 9 κάρτες συνολικά (2026-09-05)
+- [ ] Προσθήκη πραγματικού περιεχομένου στις 9 κάρτες (τώρα είναι άδεια placeholders)
 - [ ] Βελτίωση των animations
 
 ### Low Priority
@@ -73,7 +74,7 @@
 
 ---
 
-## 🛠 Setup για Mistral Vibe
+## 🛠 Setup για Claude Code
 
 ### Λocal Development
 ```bash

@@ -13,7 +13,7 @@
 Το *Run Logic* είναι ένα demo project που παρουσιάζει **animated code cards** με τη χρήση:
 - **GSAP** (GreenSock Animation Platform) για animations
 - **ScrollTrigger** για scroll-based effects
-- **SVG paths** για χρωματιστές κινούμενες γραμμές
+- **SVG paths** για πορτοκαλί κινούμενες γραμμές
 - **3D CSS effects** για το background
 
 Στόχος: Να δημιουργήσουμε ένα οπτικά εντυπωσιακό demo που μοιάζει με το [CodePen Demo](https://codepen.io/ikrprojects/pen/KwgGBRp), αλλά με σωστή δομή project και χωρίς εξωτερικές εξαρτήσεις (CDN blocks).
@@ -33,7 +33,7 @@ RUN_LOGIC/
 │       ├── gsap.min.js         # GSAP Core (περιέχει SplitText built-in)
 │       └── ScrollTrigger.min.js  # ScrollTrigger plugin
 ├── README.md               # Αυτό το αρχείο
-└── MISTRAL.md              # Οδηγίες για Mistral Vibe & pending tasks
+└── CLAUDE.md              # Οδηγίες για Claude Code & pending tasks
 ```
 
 ---
@@ -220,17 +220,15 @@ codeDivs.forEach((codeDiv, i) => {
 
 ---
 
-### 11. **Theme Toggle Switch - Πορτοκαλί BW Mode** ✅
-**Πρόσθεση:** Προσθήκη διακόπτη (toggle switch) για εναλλαγή μεταξύ Color και Black & White mode.
-**Λεπτομέρειες:**
-- **Color Mode:** Αρχική έγχρωμη έκδοση
-- **Black & White Mode:** Πορτοκαλί theme με ασημένιες αποχρώσεις
-**Υλοποίηση:**
-- HTML: Toggle switch στο top-right της σελίδας
-- CSS: Κλάση `.bw-mode` στο `<body>` με πορτοκαλί χρωματική παλέτα
-- JavaScript: `setupThemeToggle()` συνάρτηση για εναλλαγή
+### 11. **Ενιαίο Πορτοκαλί Theme (μοναδική version)** ✅
+**Ιστορικό:** Αρχικά υπήρχε toggle switch για εναλλαγή μεταξύ της έγχρωμης (multicolor) version και μιας πορτοκαλί monochrome version — που από λάθος ήταν labeled ως "B&W".
+**Τελική απόφαση:** Η **έγχρωμη version διαγράφηκε εντελώς** και το πορτοκαλί theme είναι πλέον η **μοναδική/κύρια version**. Το toggle αφαιρέθηκε.
+**Τι αφαιρέθηκε:**
+- HTML: `.theme-toggle` markup, inline fallback listener, `#cl1` multicolor SVG gradient
+- CSS: όλο το `.bw-mode` block και τα styles του toggle (`.toggle-switch`, `.slider`, `.toggle-label`)
+- JavaScript: η συνάρτηση `setupThemeToggle()`
 
-**Παλέτα Χρωμάτων (BW Mode):**
+**Παλέτα Χρωμάτων (μοναδικό theme):**
 - Background: `#0f0f0f` (βαθύ σχεδόν μαύρο)
 - Cards: `#1a120f` → `#120c08` (καφέ-πορτοκαλί gradients)
 - Card Glow: `rgba(255, 102, 0, 0.08)` + `backdrop-filter: blur(8px)`
@@ -243,7 +241,7 @@ codeDivs.forEach((codeDiv, i) => {
 ### 12. **Brand Badge Integration** ✅
 **Πρόσθεση:** Προσθήκη brand badge "a noustelos studio project />" στο top της σελίδας.
 **Λεπτομέρειες:**
-- Χρώμα: Πορτοκαλί (`#f97316`) και στις δύο εκδόσεις (Color & B&W)
+- Χρώμα: Πορτοκαλί (`#ff8c42`)
 - Στυλ: Monospace/terminal αισθητική με `Source Code Pro` font
 - Τοποθέτηση: Κεντραρισμένο στην κορυφή της σελίδας
 - Link: `https://noustelos.gr` με `target="_blank"` και `rel="noopener noreferrer"`
@@ -253,35 +251,20 @@ codeDivs.forEach((codeDiv, i) => {
 
 ---
 
-### 13. **Theme Toggle Separation** ❌ → ✅
-**Λάθος:** Αρχικά το brand badge τοποθετήθηκε **μέσα** στο theme toggle element.
-**Πρόβλημα:** Το toggle έπαψε να είναι clickable γιατί το brand badge το έκρυβε.
-**Συμπτώματα:**
-- Το theme toggle εμφανίζονταν αλλά δεν αντιδρούσε στα κλικ
-- JavaScript error: "cannot read property of null (reading 'addEventListener')"
-**Διόρθωση:**
-1. Δημιουργία κοινού `top-bar` wrapper με flex layout
-2. Χωρισμός σε δύο ξεχωριστά elements:
-   - `<header class="brand-badge">` (αριστερά)
-   - `<div class="theme-toggle">` (δεξιά)
-3. CSS διορθώσεις:
-   ```css
-   .top-bar {
-       display: flex;
-       justify-content: space-between;
-       align-items: center;
-       width: 100%;
-       padding: 1rem 2rem;
-       z-index: 9999;
-   }
-   .theme-toggle {
-       position: relative;
-       z-index: 9999;
-       pointer-events: auto;
-       cursor: pointer;
-   }
-   .theme-toggle * { pointer-events: auto; }
-   ```
+### 13. **Top Bar Layout** ✅
+**Ιστορικό:** Το brand badge είχε αρχικά τοποθετηθεί **μέσα** στο theme toggle element, κάτι που έκανε το toggle μη clickable.
+**Λύση τότε:** Κοινός `top-bar` wrapper με flex layout και ξεχωριστά elements για badge / toggle.
+**Σήμερα:** Με την αφαίρεση του toggle, το `top-bar` κρατάει μόνο το brand badge:
+```css
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 2rem;
+    z-index: 9999;
+}
+```
 
 ---
 
@@ -329,6 +312,35 @@ codeDivs.forEach((codeDiv, i) => {
 - Αφαίρεση όλων των inline styles από τις κάρτες
 - Κεντρικοποίηση όλων των styles στο `styles.css`
 - Χρήση class-based styling αντί για ID-specific
+
+### 17. **Επέκταση σε 9 Κάρτες & Tiled SVG Paths** ✅
+**Πρόσθεση:** Οι κάρτες αυξήθηκαν από 4 σε **9**, με ίδιο styling και ίδιο animation πίσω τους.
+**Πρόβλημα:** Τα 4 `linePath` ήταν σχεδιασμένα χειροκίνητα για καμβά **2000px**. Με 9 κάρτες (4500px) οι γραμμές τελείωναν στο 45% της σελίδας.
+**Απορριφθείσα λύση:** Vertical stretch με `viewBox` + `preserveAspectRatio="none"` → παραμόρφωνε τις καμπύλες (οι στρογγυλεμένες γωνίες γίνονταν ελλείψεις).
+**Λύση: tiling του ίδιου path 3 φορές σε ένα ενιαίο, συνεχές path.**
+1. Μετατροπή των λίγων **absolute** εντολών σε relative, ώστε το σώμα του path να είναι επαναλήψιμο:
+   - `H 105` → `h -354` (path01), `h -348` (path02), `h -332` (path03)
+   - `L 277,653` → `l -182,-2` και `C 158,653 77,762 77,849` → `c -119,0 -200,109 -200,196` (path03)
+   - `C 544,175 577,238 577,330` → `c 96,2 129,65 129,157` κ.λπ. (path04)
+2. Προσθήκη **οριζόντιου connector** σε κάθε ραφή, ώστε το path να ξαναρχίζει στο σωστό x:
+   `h 1` (path01), `h -72` (path02), `h 50` (path03), `h 177` (path04)
+3. Τελικό `d` = `moveto + body + (connector + body) × 2`
+
+**Γιατί έχει σημασία:** Είναι **ένα** αδιάσπαστο path, όχι 3 αντίγραφα. Έτσι το `stroke-dasharray` κυλάει συνεχόμενα χωρίς κόψιμο στις ραφές.
+
+**Συνοδευτικές αλλαγές:**
+- `main` height: `2000px` → **`4500px`** (9 × [450 card + 25 + 25 margins])
+- `#svgPaths` height: `2000px` → **`4600px`** (και στο `height` attribute του SVG)
+- `js/script.js`: `--strokeDashoffset` από `-2400` σε **`-7200`** (3×, όσο και το μήκος των paths) ώστε η ταχύτητα του animation σε σχέση με το scroll να μείνει **ίδια**
+
+**Επαλήθευση:**
+- Path evaluator επιβεβαίωσε ότι κάθε relative σώμα καταλήγει στο **ίδιο ακριβώς σημείο** με το πρωτότυπο και ότι κάθε connector επιστρέφει στο αρχικό x
+- Headless render με solid stroke → η γραμμή περνά συνεχόμενα πίσω και από τις 9 κάρτες
+- Headless render με `--strokeDashoffset: -3600` (50% scroll) → το πακέτο των dashes βρίσκεται πίσω από την **5η** κάρτα, δηλαδή σωστός συγχρονισμός σε όλο το μήκος
+
+**IDs καρτών:** `codepen`, `html`, `css`, `js`, `react`, `vue`, `node`, `ts`, `git` (labels μόνο — όλες μοιράζονται το ίδιο mask/styling)
+
+---
 
 ---
 
@@ -384,6 +396,11 @@ codeDivs.forEach((codeDiv, i) => {
 ```
 2. Πρόσθεσε το CSS στη `.card#new-card` (βάση των υφιστάμενων variants).
 3. Το JavaScript θα το πιάσει αυτόματα.
+4. **Ενημέρωσε τα ύψη** στο `css/styles.css` — κάθε κάρτα πιάνει 500px (450 + 2×25 margin):
+   - `main { height: <πλήθος καρτών> × 500px }`
+   - `#svgPaths { height: ... }` (~100px παραπάνω) και το `height` attribute του `<svg id="svgPaths">`
+5. Αν οι κάρτες ξεπεράσουν το μήκος των SVG paths, πρόσθεσε άλλο ένα tile στο `d`
+   (βλ. *Fix #17*) και σκάλωσε ανάλογα το `-7200` στο `js/script.js`.
 
 ### Αλλαγή Ταχύτητας Animation
 Στο `js/script.js`, άλλαξε το `stagger`:
@@ -395,7 +412,7 @@ stagger: 0.005  // Πολύ γρήγορο
 
 ### Αλλαγή Χρωμάτων
 Στο `css/styles.css`, άλλαξε τα gradients:
-- `#cl1` (SVG paths gradient)
+- `#svgPaths use { stroke: ... }` (χρώμα των animated γραμμών)
 - `background` στις κάρτες
 - `background` στο `#tablet`
 
@@ -435,22 +452,22 @@ stagger: 0.005  // Πολύ γρήγορο
 
 *Last updated: 2026-09-05
 *Philosophy: Keep it simple*
-*New: Theme toggle switch with orange monochrome mode
+*New: 9 cards (from 4) with tiled, continuous SVG paths
+*New: Orange theme is now the single/main version
+*Removed: Color version and the theme toggle switch
 *New: Brand badge integration (noustelos.gr)
-*New: Top-bar layout with brand badge and theme toggle
 *Fixed: Unified card styling across all 4 cards
-*Fixed: Theme toggle clickability and z-index issues
 
 ---
 
-## 🤖 Collaboration with Mistral Vibe
+## 🤖 Collaboration with Claude Code
 
-**Live Sandbox:** Αυτό το repository χρησιμοποιείται ως **live sandbox** για συνεργασία με τον Mistral Vibe.
+**Live Sandbox:** Αυτό το repository χρησιμοποιείται ως **live sandbox** για συνεργασία με τον Claude Code.
 
 **Workflow:**
 1. Ο χρήστης ζητά αλλαγές/βελτιώσεις
-2. Ο Mistral Vibe υλοποιεί τις αλλαγές **λοκαλά**
-3. Ο Mistral Vibe κάνει **commit & push** 
+2. Ο Claude Code υλοποιεί τις αλλαγές **λοκαλά**
+3. Ο Claude Code κάνει **commit & push** 
 4. Οι αλλαγές είναι **live** στο GitHub αμέσως μετά
 
 **Commands που χρησιμοποιώ:**
