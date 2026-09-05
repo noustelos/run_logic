@@ -1,0 +1,22 @@
+# macOS
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS generated files
+Thumbs.db
+*.tmp
+
+# Node modules (if ever needed)
+node_modules/
+
+# Logs
+*.log
+
+# Build outputs
+dist/
+build/
