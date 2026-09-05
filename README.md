@@ -216,7 +216,27 @@ codeDivs.forEach((codeDiv, i) => {
 - Το κείμενο "The best place..." εμφανίζονταν ως "Thebestplace..."
 **Διόρθωση:**
 - Κράτησα το header ως είναι (χωρίς splitting)
--只有 split τα `<code>` elements που δεν είναι flex containers
+- μόνο split τα `<code>` elements που δεν είναι flex containers
+
+---
+
+### 11. **Theme Toggle Switch - Πορτοκαλί BW Mode** ✅
+**Πρόσθεση:** Προσθήκη διακόπτη (toggle switch) για εναλλαγή μεταξύ Color και Black & White mode.
+**Λεπτομέρειες:**
+- **Color Mode:** Αρχική έγχρωμη έκδοση
+- **Black & White Mode:** Πορτοκαλί theme με ασημένιες αποχρώσεις
+**Υλοποίηση:**
+- HTML: Toggle switch στο top-right της σελίδας
+- CSS: Κλάση `.bw-mode` στο `<body>` με πορτοκαλί χρωματική παλέτα
+- JavaScript: `setupThemeToggle()` συνάρτηση για εναλλαγή
+
+**Παλέτα Χρωμάτων (BW Mode):**
+- Background: `#0f0f0f` (βαθύ σχεδόν μαύρο)
+- Cards: `#1a120f` → `#120c08` (καφέ-πορτοκαλί gradients)
+- Card Glow: `rgba(255, 102, 0, 0.08)` + `backdrop-filter: blur(8px)`
+- Text Gradients: `#ff8c42` → `#ffb366` → `#ff9955` → `#ff6600`
+- SVG Paths: `#ff8c42` (ζωντανό πορτοκαλί)
+- Tablet Border: `#ff6600`
 
 ---
 
@@ -320,6 +340,7 @@ stagger: 0.005  // Πολύ γρήγορο
 
 *Last updated: 2026-09-05
 *Philosophy: Keep it simple*
+*New: Theme toggle switch with orange monochrome mode*
 
 ---
 

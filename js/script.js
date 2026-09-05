@@ -75,6 +75,7 @@ function init() {
     });
 
     setupScrollAnimations();
+    setupThemeToggle();
 }
 
 function writeText(i) {
@@ -108,4 +109,19 @@ function setupScrollAnimations() {
             gsap.set("body", { "--tabletVerticaloffset": scrollProgress2 });
         }
     });
+}
+
+function setupThemeToggle() {
+    const toggle = document.getElementById('bw-toggle');
+    const body = document.body;
+    
+    if (toggle && body) {
+        toggle.addEventListener('change', function() {
+            if (this.checked) {
+                body.classList.add('bw-mode');
+            } else {
+                body.classList.remove('bw-mode');
+            }
+        });
+    }
 }
