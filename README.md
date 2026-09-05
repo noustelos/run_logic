@@ -294,6 +294,23 @@ stagger: 0.005  // Πολύ γρήγορο
 
 ---
 
+## 🎯 Φιλοσοφία Project
+
+**Προτίμηση:** **Απλές λύσεις > Over-engineering**
+
+- ✅ **Minimal dependencies** (μόνο GSAP + ScrollTrigger)
+- ✅ **Manual implementations** (π.χ. χειροκίνητο SplitText αντί για plugin)
+- ✅ **Local files** αντί για CDN (αποφυγή blocks)
+- ✅ **Plain CSS** αντί για SCSS (συμβατότητα)
+- ✅ **Standard HTML tags** αντί για custom elements
+
+**Αποφύγε:**
+- ❌ Υπερβολική χρήση βιβλιοθηκών
+- ❌ Complex build systems (Webpack, Vite κ.λπ.) για απλά projects
+- ❌ External dependencies αν μπορούν να αποφευχθούν
+
+---
+
 ## ⚠️ Σημαντικά
 - **SplitText** στο GSAP **δεν είναι δωρεάν** για εμπορική χρήση. Η χειροκίνητη υλοποίηση μας **δεν έχει αυτόν τον περιορισμό**.
 - **GSAP Core** (3.12.2) περιέχει πολλά plugins built-in, αλλά **not all** (π.χ. ScrollTrigger χρειάζεται ξεχωριστό αρχείο).
@@ -301,4 +318,27 @@ stagger: 0.005  // Πολύ γρήγορο
 
 ---
 
-*Last updated: 2026-09-05*
+*Last updated: 2026-09-05
+*Philosophy: Keep it simple*
+
+---
+
+## 🤖 Collaboration with Mistral Vibe
+
+**Live Sandbox:** Αυτό το repository χρησιμοποιείται ως **live sandbox** για συνεργασία με τον Mistral Vibe.
+
+**Workflow:**
+1. Ο χρήστης ζητά αλλαγές/βελτιώσεις
+2. Ο Mistral Vibe υλοποιεί τις αλλαγές **λοκαλά**
+3. Ο Mistral Vibe κάνει **commit & push** 
+4. Οι αλλαγές είναι **live** στο GitHub αμέσως μετά
+
+**Commands που χρησιμοποιώ:**
+```bash
+cd /Users/nikoskaradimas/Desktop/RUN_LOGIC
+git add .
+git commit -m "[_message_]"
+git push origin main
+```
+
+**Σημείωση:** Όλες οι αλλαγές που κάνω **πηγαίνουν live** μετά το push.
