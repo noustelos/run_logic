@@ -8,7 +8,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400..600;1,400..600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Source+Code+Pro:ital,wght@0,400..600;1,400..600&display=swap" rel="stylesheet">
     
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="css/styles.css">
@@ -38,6 +38,17 @@
             <a href="https://noustelos.gr/" target="_blank" rel="noopener noreferrer">a noustelos studio project<span class="badge-mark" aria-hidden="true">/&gt;</span></a>
         </header>
     </div>
+    <div class="grain" aria-hidden="true"></div>
+    <section class="hero">
+        <svg class="hero-texture" viewBox="0 0 1600 520" preserveAspectRatio="xMidYMid slice"
+             xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <g id="heroWaves"></g>
+        </svg>
+        <div class="hero-content">
+            <h1 class="hero-title">Run Logic<span class="hero-caret" aria-hidden="true"></span></h1>
+            <p class="hero-tag">// scroll to run</p>
+        </div>
+    </section>
     <main>
         <div class="cards">
             <div class="cardWrapper">
@@ -91,21 +102,39 @@
             <div id="tablet"></div>
         </div>
 
-        <svg id="svgPaths" width="740" height="4600" xmlns="http://www.w3.org/2000/svg">
+        <svg id="svgPaths" width="740" height="5760" viewBox="0 -560 740 5760" xmlns="http://www.w3.org/2000/svg">
             <use href="#linePath01" />
             <use href="#linePath02" />
             <use href="#linePath03" />
             <use href="#linePath04" />
         </svg>
+
+        <!-- Finale lives in its own small SVG: the big #svgPaths surface is
+             blurred, and animating inside it would re-blur 740x5200px a frame. -->
+        <svg id="svgFinale" width="740" height="800" viewBox="0 4450 740 800"
+             xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <ellipse id="infHalo" cx="364" cy="4800" rx="440" ry="300" fill="url(#infGlow)" />
+            <g id="infinityTexture" mask="url(#texMask)"></g>
+            <g id="infinityGroup">
+                <path class="inf-loop" id="infLoop1" d="M 364,4800 C 274,4677.6 184,4677.6 184,4800 C 184,4922.4 274,4922.4 364,4800 C 454,4677.6 544,4677.6 544,4800 C 544,4922.4 454,4922.4 364,4800" />
+                <path class="inf-loop" id="infLoop2" d="M 364,4800 C 244,4636.8 124,4636.8 124,4800 C 124,4963.2 244,4963.2 364,4800 C 484,4636.8 604,4636.8 604,4800 C 604,4963.2 484,4963.2 364,4800" />
+                <path class="inf-loop" id="infLoop3" d="M 364,4800 C 214,4596 64,4596 64,4800 C 64,5004 214,5004 364,4800 C 514,4596 664,4596 664,4800 C 664,5004 514,5004 364,4800" />
+                <path class="inf-loop" id="infLoop4" d="M 364,4800 C 186.5,4558.6 9,4558.6 9,4800 C 9,5041.4 186.5,5041.4 364,4800 C 541.5,4558.6 719,4558.6 719,4800 C 719,5041.4 541.5,5041.4 364,4800" />
+                <path class="inf-runner" id="infRunner1" d="M 364,4800 C 274,4677.6 184,4677.6 184,4800 C 184,4922.4 274,4922.4 364,4800 C 454,4677.6 544,4677.6 544,4800 C 544,4922.4 454,4922.4 364,4800" />
+                <path class="inf-runner" id="infRunner2" d="M 364,4800 C 244,4636.8 124,4636.8 124,4800 C 124,4963.2 244,4963.2 364,4800 C 484,4636.8 604,4636.8 604,4800 C 604,4963.2 484,4963.2 364,4800" />
+                <path class="inf-runner" id="infRunner3" d="M 364,4800 C 214,4596 64,4596 64,4800 C 64,5004 214,5004 364,4800 C 514,4596 664,4596 664,4800 C 664,5004 514,5004 364,4800" />
+                <path class="inf-runner" id="infRunner4" d="M 364,4800 C 186.5,4558.6 9,4558.6 9,4800 C 9,5041.4 186.5,5041.4 364,4800 C 541.5,4558.6 719,4558.6 719,4800 C 719,5041.4 541.5,5041.4 364,4800" />
+                </g>        </svg>
+
     </main>
 
     <!-- SVG Definitions (Hidden) -->
     <svg width="0" height="0" role="none" style="position: absolute;">
         <defs>
-            <path id="linePath01" d="m 106,45h 375c 114,0 226,128 226,235v 236c 0,136 -122,222 -224,221l -182,-2c -89,1 -141,42 -142,158l -2,204c -1,117 37,173 134,173h 186c 110,-3 230,111 230,220v 242c 0,113 -125,225 -248,225h -354h 1h 375c 114,0 226,128 226,235v 236c 0,136 -122,222 -224,221l -182,-2c -89,1 -141,42 -142,158l -2,204c -1,117 37,173 134,173h 186c 110,-3 230,111 230,220v 242c 0,113 -125,225 -248,225h -354h 1h 375c 114,0 226,128 226,235v 236c 0,136 -122,222 -224,221l -182,-2c -89,1 -141,42 -142,158l -2,204c -1,117 37,173 134,173h 186c 110,-3 230,111 230,220v 242c 0,113 -125,225 -248,225h -354" />
-            <path id="linePath02" d="m 33,85h 444c 96,0 190,107 190,201v 224c 0,116 -98,188 -190,187l -192,-2c -92,0 -166,75 -166,168v 278c 0,94 74,169 166,169h 194c 92,0 188,94 188,188v 228c 0,94 -104,191 -214,191h -348h -72h 444c 96,0 190,107 190,201v 224c 0,116 -98,188 -190,187l -192,-2c -92,0 -166,75 -166,168v 278c 0,94 74,169 166,169h 194c 92,0 188,94 188,188v 228c 0,94 -104,191 -214,191h -348h -72h 444c 96,0 190,107 190,201v 224c 0,116 -98,188 -190,187l -192,-2c -92,0 -166,75 -166,168v 278c 0,94 74,169 166,169h 194c 92,0 188,94 188,188v 228c 0,94 -104,191 -214,191h -348" />
-            <path id="linePath03" d="m 155,127h 308c 94,0 162,86 162,177v 178c 0,109 -50,174 -166,173l -182,-2c -119,0 -200,109 -200,196v 302c 0,118 107,196 180,197l 204,4c 92,0 164,67 164,160v 200c 0,91 -89,163 -188,163h -332h 50h 308c 94,0 162,86 162,177v 178c 0,109 -50,174 -166,173l -182,-2c -119,0 -200,109 -200,196v 302c 0,118 107,196 180,197l 204,4c 92,0 164,67 164,160v 200c 0,91 -89,163 -188,163h -332h 50h 308c 94,0 162,86 162,177v 178c 0,109 -50,174 -166,173l -182,-2c -119,0 -200,109 -200,196v 302c 0,118 107,196 180,197l 204,4c 92,0 164,67 164,160v 200c 0,91 -89,163 -188,163h -332" />
-            <path id="linePath04" d="m 283,173c 2,0 165,0 165,0c 96,2 129,65 129,157v 156c 0,94 -48,126 -140,125l -168,-2c -102,-7 -240,93 -240,242v 312c 0,111 101,235 242,235h 162c 109,1 144,49 144,136v 162c 0,73 -53,130 -118,130l -353,1h 177c 2,0 165,0 165,0c 96,2 129,65 129,157v 156c 0,94 -48,126 -140,125l -168,-2c -102,-7 -240,93 -240,242v 312c 0,111 101,235 242,235h 162c 109,1 144,49 144,136v 162c 0,73 -53,130 -118,130l -353,1h 177c 2,0 165,0 165,0c 96,2 129,65 129,157v 156c 0,94 -48,126 -140,125l -168,-2c -102,-7 -240,93 -240,242v 312c 0,111 101,235 242,235h 162c 109,1 144,49 144,136v 162c 0,73 -53,130 -118,130l -353,1" />
+            <path id="linePath01" d="M 364,-245 C 236,-120 -30,5 106,45 h 375 c 114,0,226,128,226,235 v 236 c 0,136,-122,222,-224,221 l -182,-2 c -89,1,-141,42,-142,158 l -2,204 c -1,117,37,173,134,173 h 186 c 110,-3,230,111,230,220 v 242 c 0,113,-125,225,-248,225 h -354 h 1 h 375 c 114,0,226,128,226,235 v 236 c 0,136,-122,222,-224,221 l -182,-2 c -89,1,-141,42,-142,158 l -2,204 c -1,117,37,173,134,173 h 186 c 110,-3,230,111,230,220 v 242 c 0,113,-125,225,-248,225 h -354 h 1 h 375 c 114,0,226,128,226,235 v 236 C 707,4480 425.74,4570 364,4800" />
+            <path id="linePath02" d="M 364,-245 C 330,-60 -110,55 33,85 h 444 c 96,0,190,107,190,201 v 224 c 0,116,-98,188,-190,187 l -192,-2 c -92,0,-166,75,-166,168 v 278 c 0,94,74,169,166,169 h 194 c 92,0,188,94,188,188 v 228 c 0,94,-104,191,-214,191 h -348 h -72 h 444 c 96,0,190,107,190,201 v 224 c 0,116,-98,188,-190,187 l -192,-2 c -92,0,-166,75,-166,168 v 278 c 0,94,74,169,166,169 h 194 c 92,0,188,94,188,188 v 228 c 0,94,-104,191,-214,191 h -348 h -72 h 444 c 96,0,190,107,190,201 v 224 c 0,116,-98,188,-190,187 l -192,-2 C 185.005,4357.96 349.78,4570 364,4800" />
+            <path id="linePath03" d="M 364,-245 C 470,-110 15,100 155,127 h 308 c 94,0,162,86,162,177 v 178 c 0,109,-50,174,-166,173 l -182,-2 c -119,0,-200,109,-200,196 v 302 c 0,118,107,196,180,197 l 204,4 c 92,0,164,67,164,160 v 200 c 0,91,-89,163,-188,163 h -332 h 50 h 308 c 94,0,162,86,162,177 v 178 c 0,109,-50,174,-166,173 l -182,-2 c -119,0,-200,109,-200,196 v 302 c 0,118,107,196,180,197 l 204,4 c 92,0,164,67,164,160 v 200 c 0,91,-89,163,-188,163 h -332 h 50 h 308 c 94,0,162,86,162,177 v 178 c 0,109,-50,174,-166,173 l -182,-2 c -119,0,-200,109,-200,196 C 77,4485 312.34,4570 364,4800" />
+            <path id="linePath04" d="M 364,-245 C 560,-175 150,150 283,173 c 2,0,165,0,165,0 c 96,2,129,65,129,157 v 156 c 0,94,-48,126,-140,125 l -168,-2 c -102,-7,-240,93,-240,242 v 312 c 0,111,101,235,242,235 h 162 c 109,1,144,49,144,136 v 162 c 0,73,-53,130,-118,130 l -353,1 h 177 c 2,0,165,0,165,0 c 96,2,129,65,129,157 v 156 c 0,94,-48,126,-140,125 l -168,-2 c -102,-7,-240,93,-240,242 v 312 c 0,111,101,235,242,235 h 162 c 109,1,144,49,144,136 v 162 c 0,73,-53,130,-118,130 l -353,1 h 177 c 2,0,165,0,165,0 c 96,2,129,65,129,157 v 156 c 0,94,-48,126,-140,125 l -168,-2 c -102,-7,-240,93,-240,242 C 29,4339 303.7,4570 364,4800" />
             <path id="codepenIcon" fill="#FFFFFF" d="m 214,306 -57,37c -1,0 -2,2 -2,3v 40c 0,1 1,2 2,3l 57,40c 2,1 6,1 7,0l 58,-40c 1,0 2,-1 2,-3v -40c 0,-2 -2,-3 -2,-3l -57,-37c -4,-3 -8,0 -8,0zm -2,13 1,26 -24,16 -19,-14zm 10,0 43,28 -19,14 -24,-16zm -6,35 19,14 -19,14 -19,-14zm -52,3 14,9 -14,9zm 106,0v 19l -14,-9zm -84,15 24,16v 26l -42,-28zm 59,0 17,14 -42,28v -26z" />
             <path id="htmlIcon" fill="#FFFFFF" d="m 94,318v 109h 16v -47h 12v 47h 16V 318h -16v 45h -12v -45zm 47,0v 18h 14v 92h 15v -92h 14v -18zm 45,0v 109h 15v -54l 7,41h 12l 5,-42v 55h 15V 318h -16l -11,72 -11,-72zm 62,0 1,109h 34v -19h -19v -91z" />
             <path id="cssIcon" fill="#FFFFFF" d="m 94,398c 0,26 18,31 30,31 9,0 32,-3 31,-34h -19c 0,23 -22,21 -22,0v -43c 0,-25 22,-21 22,1h 18c 1,-32 -22,-35 -30,-35 -10,0 -30,3 -30,32zm 105,-1c 0,22 -23,18 -23,-2h -18c 0,0 1,33 30,33 9,0 30,-4 30,-31 0,-42 -39,-26 -39,-50 0,-16 22,-20 22,3h 18c -2,-21 -11,-31 -30,-31 -9,0 -28,0 -29,28 -1,40 39,23 39,50zm 62,0c 0,21 -22,22 -23,-2h -17c 0,0 0,33 30,33 18,0 30,-9 30,-31 0,-41 -39,-27 -39,-50 0,-15 22,-20 22,3h 18c -1,-22 -13,-31 -27,-31 -11,0 -32,1 -33,27 1,38 39,25 39,51z" />
@@ -120,6 +149,31 @@
             <mask id="htmlMask2"><use href="#htmlIcon" stroke="#FFFFFF" stroke-width="4" /></mask>
             <mask id="cssMask2"><use href="#cssIcon" stroke="#FFFFFF" stroke-width="4" /></mask>
             <mask id="jsMask2"><use href="#jsIcon" stroke="#FFFFFF" stroke-width="4" /></mask>
+
+            <!-- The four lines all begin at one point. Fading the stroke itself
+                 over that first stretch dissolves the join, so they appear to
+                 rise out of the hero rather than shoot from an arrowhead.
+                 A stroke gradient, not a mask: no extra surface to rasterise. -->
+            <linearGradient id="lineFade" gradientUnits="userSpaceOnUse" x1="0" y1="-245" x2="0" y2="140">
+                <stop offset="0" stop-color="#ff8c42" stop-opacity="0" />
+                <stop offset="0.5" stop-color="#ff8c42" stop-opacity="0.45" />
+                <stop offset="1" stop-color="#ff8c42" stop-opacity="1" />
+            </linearGradient>
+
+            <!-- Finale: warm halo and the soft edge for the wave texture -->
+            <radialGradient id="infGlow">
+                <stop offset="0%" stop-color="#ff6600" stop-opacity="0.30" />
+                <stop offset="45%" stop-color="#ff6600" stop-opacity="0.11" />
+                <stop offset="100%" stop-color="#ff6600" stop-opacity="0" />
+            </radialGradient>
+            <radialGradient id="texFade">
+                <stop offset="0%" stop-color="#FFFFFF" />
+                <stop offset="55%" stop-color="#FFFFFF" stop-opacity="0.7" />
+                <stop offset="100%" stop-color="#000000" />
+            </radialGradient>
+            <mask id="texMask">
+                <ellipse cx="364" cy="4800" rx="470" ry="330" fill="url(#texFade)" />
+            </mask>
         </defs>
     </svg>
     

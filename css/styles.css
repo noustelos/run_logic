@@ -7,7 +7,7 @@
 /* ========================================
    Base Styles & Imports
    ======================================== */
-@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400..600;1,400..600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Source+Code+Pro:ital,wght@0,400..600;1,400..600&display=swap');
 
 * {
     box-sizing: border-box;
@@ -68,13 +68,202 @@ html, body {
 }
 
 body {
-    --strokeDashoffset: 0;
     --tabletVerticaloffset: 0px;
     background: #0f0f0f;
     font-size: 1.2rem;
     font-weight: 400;
     font-style: normal;
     color: #FFFFFF;
+}
+
+/* ========================================
+   Hero
+   ======================================== */
+/* Fixed height on purpose: #svgPaths reaches up into this block with a
+   hard-coded offset, so the hero must not resize with the viewport. */
+.hero {
+    position: relative;
+    height: 510px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    z-index: 2;
+}
+
+/* Full bleed, no frame - the lines read as rising out of the page itself
+   rather than escaping from a box. */
+.hero-texture {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    pointer-events: none;
+}
+
+#heroWaves path {
+    fill: none;
+    stroke: #ff8c42;
+    stroke-width: 1;
+}
+
+/* ---- Wave motion (shared by the hero band and the finale texture) ----
+   Drift slides one full wavelength; because the wave is periodic, the loop
+   closes with no seam. Sway and swell run on the inner group at unrelated
+   periods, so the three rhythms never realign. */
+.wave-drift {
+    animation-name: waveDrift;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+.wave-sway {
+    animation-name: waveSway, waveSwell;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes waveDrift {
+    from { transform: translateX(0); }
+    to   { transform: translateX(var(--drift)); }
+}
+
+@keyframes waveSway {
+    from { transform: translateY(calc(var(--sway) * -1)); }
+    to   { transform: translateY(var(--sway)); }
+}
+
+@keyframes waveSwell {
+    from { opacity: 1; }
+    to   { opacity: 0.45; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .wave-drift,
+    .wave-sway {
+        animation: none;
+    }
+}
+
+/* Dissolve at every edge so the band has nowhere it visibly stops. */
+.hero-texture {
+    -webkit-mask-image: radial-gradient(ellipse 62% 74% at 50% 44%,
+                        #000 0%, rgba(0, 0, 0, 0.6) 52%, transparent 100%);
+    mask-image: radial-gradient(ellipse 62% 74% at 50% 44%,
+                #000 0%, rgba(0, 0, 0, 0.6) 52%, transparent 100%);
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse 36% 32% at 50% 40%,
+                rgba(15, 15, 15, 0.85) 0%, rgba(15, 15, 15, 0.45) 55%, transparent 80%);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 0 20px;
+    /* Sits above centre: the lines fan out of the space left below it. */
+    transform: translateY(-42px);
+    opacity: 0;
+    animation: heroIn 1.8s cubic-bezier(0.16, 0.78, 0.3, 1) 0.4s forwards;
+}
+
+.hero-title {
+    margin: 0;
+    /* The cards spell HTML with a drawn path, not a typeface: narrow, heavy,
+       flat terminals (the H is 44x109 units). Big Shoulders Display is the
+       closest match on the same axis - condensed industrial grotesque. */
+    font-family: "Big Shoulders Display", "Anton", sans-serif;
+    font-weight: 700;
+    font-size: clamp(58px, 10.5vw, 126px);
+    line-height: 0.92;
+    letter-spacing: 0.012em;
+    text-transform: uppercase;
+    /* Hollow letters with a thin orange edge - the same treatment the cards
+       get from #htmlMask2, which reveals the gradient only as a ring. */
+    color: transparent;
+    -webkit-text-stroke: 2px #ff8c42;
+    text-stroke: 2px #ff8c42;
+    /* text-shadow still draws from the glyph shape even with a transparent
+       fill, so this reads as a faint bloom inside and around the outline. */
+    text-shadow:
+        0 0 16px rgba(255, 102, 0, 0.30),
+        0 0 44px rgba(255, 102, 0, 0.15);
+    animation: titleSettle 2.1s cubic-bezier(0.16, 0.78, 0.3, 1) 0.4s backwards;
+}
+
+/* Tracking closes as the block fades up. Declared here rather than on
+   .hero-content, whose value the children override. */
+@keyframes titleSettle {
+    from { letter-spacing: 0.26em; }
+    to   { letter-spacing: 0.012em; }
+}
+
+.hero-caret {
+    display: inline-block;
+    width: 0.4em;
+    height: 0.05em;
+    margin-left: 0.14em;
+    vertical-align: 0.02em;
+    border-radius: 1px;
+    background-color: #ff8c42;
+    box-shadow: 0 0 14px rgba(255, 102, 0, 0.45);
+    animation: caretBreathe 3.4s ease-in-out infinite;
+}
+
+.hero-tag {
+    margin: 22px 0 0;
+    font-family: "Source Code Pro", monospace;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    color: rgba(255, 140, 66, 0.5);
+}
+
+@keyframes heroIn {
+    from {
+        opacity: 0;
+        transform: translateY(-24px);
+        filter: blur(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(-42px);
+        filter: blur(0);
+    }
+}
+
+/* A slow swell instead of a hard blink - present, but never nagging. */
+@keyframes caretBreathe {
+    0%, 100% { opacity: 0.18; }
+    50% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-content,
+    .hero-title,
+    .hero-caret {
+        animation: none;
+    }
+
+    .hero-content {
+        opacity: 1;
+    }
+}
+
+@media (max-width: 575px) {
+    .hero {
+        height: 440px;
+    }
 }
 
 /* ========================================
@@ -87,7 +276,7 @@ main {
     position: relative;
     width: 100%;
     max-width: 740px;
-    height: 4500px;
+    height: 5350px;
     padding: 0px;
     margin-left: auto;
     margin-right: auto;
@@ -307,12 +496,14 @@ main.js-ready {
    ======================================== */
 #svgPaths {
     position: absolute;
-    top: 75px;
+    /* Reaches up behind the hero window: the lines are born out of sight
+       under it and emerge from its lower edge. */
+    top: -485px;
     z-index: 1;
     width: 740px;
     max-width: 100%;
     overflow-x: clip;
-    height: 4600px;
+    height: 5760px;
     filter: blur(1px);
     pointer-events: none;
 }
@@ -326,9 +517,8 @@ main.js-ready {
 
 #svgPaths use {
     fill: none;
-    stroke: #ff8c42;
+    stroke: url(#lineFade);
     stroke-linecap: round;
-    stroke-dashoffset: var(--strokeDashoffset);
 }
 
 #svgPaths use[href="#linePath01"] {
@@ -349,4 +539,82 @@ main.js-ready {
 #svgPaths use[href="#linePath04"] {
     --dot: 40px; --gap: 70px;
     stroke-dasharray: var(--dot) var(--gap) 100px var(--gap) var(--dot) var(--gap) 200px var(--gap) var(--dot) 20000px;
+}
+
+/* ========================================
+   Infinity Finale
+   ======================================== */
+/* Its own surface, sized to the finale only. The blur here costs 740x800px
+   per frame instead of the 740x5200px of #svgPaths. */
+#svgFinale {
+    position: absolute;
+    top: 4525px;
+    z-index: 1;
+    width: 740px;
+    max-width: 100%;
+    height: 800px;
+    filter: blur(1px);
+    pointer-events: none;
+}
+
+@media (min-width: 576px) {
+    #svgFinale {
+        -webkit-transform: translateX(6vw);
+        transform: translateX(6vw);
+    }
+}
+#infinityGroup path {
+    fill: none;
+    stroke: #ff8c42;
+    stroke-linecap: round;
+}
+
+/* Same weight and colour as the scrolling lines, so the symbol reads as
+   those lines closing on themselves rather than a separate graphic. */
+.inf-loop {
+    stroke-width: 1.2;
+    opacity: 0;
+}
+
+.inf-runner {
+    stroke-width: 2.6;
+    stroke: #ffc9a0;
+    opacity: 0;
+}
+
+/* Flowing wave texture behind the symbol (built in script.js) */
+#infinityTexture path {
+    fill: none;
+    stroke: #ff8c42;
+    stroke-width: 1;
+}
+
+/* ========================================
+   Film Grain
+   ======================================== */
+.grain {
+    position: fixed;
+    inset: -150%;
+    width: 400%;
+    height: 400%;
+    z-index: 50;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation: grainShift 0.6s steps(1) infinite;
+}
+
+@keyframes grainShift {
+    0%   { transform: translate(0, 0); }
+    20%  { transform: translate(-3%, -2%); }
+    40%  { transform: translate(2%, 4%); }
+    60%  { transform: translate(-4%, 1%); }
+    80%  { transform: translate(3%, -3%); }
+    100% { transform: translate(-1%, 2%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .grain {
+        animation: none;
+    }
 }
