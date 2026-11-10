@@ -199,24 +199,6 @@ function buildTexture() {
         opacityStep: 0.03,
         duration: 30
     });
-
-    // The hero runs the same texture wider and slower, so the two ends of the
-    // page are built from one material at two scales.
-    buildWaves(select("#heroWaves"), {
-        centerY: 258,
-        width: 1600,
-        bands: 4,
-        perBand: 3,
-        spacing: 38,
-        wavelength: 620,
-        amplitude: 16,
-        amplitudeStep: 5,
-        opacity: 0.095,
-        opacityStep: 0.035,
-        duration: 26,
-        sway: 9,
-        swayDuration: 9.5
-    });
 }
 
 function setupInfinity() {
