@@ -40,6 +40,10 @@ RUN_LOGIC/
 
 ## 🚀 Setup & Εκτέλεση
 
+### Περιβάλλον Ανάπτυξης (Dev Machine)
+- **Υλικό:** MacBook Air M2, 16GB RAM (Apple Silicon — όχι Intel i5)
+- **Λειτουργικό:** macOS
+
 ### Local Development
 
 ```bash
@@ -430,6 +434,26 @@ ScrollTrigger.update();
 
 ---
 
+### 24. **Αφαίρεση Hero Wave Texture, Film Grain & Βελτιστοποίηση Κώδικα (2026-11-10)** ✅
+**Αισθητικές αλλαγές:**
+- Αφαιρέθηκε το `#heroWaves` / `.hero-texture` από το `.hero` ώστε ο outlined τίτλος *Run Logic* να στέκεται σε καθαρό background.
+- Αφαιρέθηκε το `.grain` (film grain overlay) από ολόκληρη τη σελίδα.
+
+**Βελτιστοποιήσεις Performance & Καθαρισμός:**
+- **Διπλό Google Fonts:** Αφαιρέθηκε το render-blocking `@import url(...)` από το `css/styles.css` (τα fonts φορτώνονται ήδη μέσω `<link>` στο `index.html`).
+- **GPU Compositing στο `#world3d`:** Αντικαταστάθηκε το `top: var(--tabletVerticaloffset)` με `transform: translate3d(0, ..., 0)` και `will-change: transform`, αποφεύγοντας layout recalculations και `1px` stepping (`parseInt`) σε κάθε frame του scroll.
+- **Viewport-Aware Finale Animations:** Τα 9 ατέρμονα GSAP tweens στο `#svgFinale` ξεκινούν σε `paused: true` και ενεργοποιούνται μέσω `ScrollTrigger` μόνο όταν το finale πλησιάζει στο viewport (και σέβονται το `prefers-reduced-motion: reduce`).
+- **Σταθερό ύψος `.hero` σε Mobile:** Αφαιρέθηκε το `@media (max-width: 575px) { .hero { height: 440px; } }` ώστε το `.hero` να παραμένει σταθερά `510px` και να ευθυγραμμίζεται με το `top: -485px` του `#svgPaths`.
+
+---
+
+### 25. **Αριθμημένες Κάρτες `1`–`9` αντί για `HTML` & Cache Busting (2026-11-10)** ✅
+**Αλλαγή:**
+- Οι 9 κάρτες μετονομάστηκαν σε `#card1` έως `#card9` και το ενιαίο `#htmlIcon` / `#htmlMask` αντικαταστάθηκε από 9 ξεχωριστά vector paths (`#num1Icon`–`#num9Icon`, εξαγόμενα από την industrial condensed γραμματοσειρά **DIN Condensed Bold** σε ύψος `109px`, `y = 318..427`) και τα αντίστοιχα masks `#num1Mask`–`#num9Mask` / `#num1Mask2`–`#num9Mask2`.
+- **Cache Busting στο Live Site:** Όταν αλλάζουν IDs από SVG `<mask>` μεταξύ `index.html` και `css/styles.css`, αν ο browser κρατήσει cached το παλιό `styles.css` (που ψάχνει το καταργημένο `#htmlMask`), εφαρμόζεται μόνο το `#block` και οι κάρτες φαίνονται κενές. Προστέθηκε version query string (`css/styles.css?v=2`, `js/script.js?v=2`) στο `index.html` ώστε να αποφεύγεται η ανάγκη για χειροκίνητο Hard Refresh (`Cmd + Shift + R`).
+
+---
+
 ## 📝 Σημαντικές Σημειώσεις (Για να μην ξαναγίνουν)
 
 ### ✅ **Best Practices για Μέλλον**
@@ -565,15 +589,19 @@ stagger: 0.005  // Πολύ γρήγορο
 
 ---
 
-*Last updated: 2026-09-06
+*Last updated: 2026-11-10*
+*Dev Machine: MacBook Air M2, 16GB RAM (Apple Silicon)*
 *Philosophy: Keep it simple*
-*New: Full-bleed .dev hero - wave texture, outlined title, lines emanating from a single source
-*New: Infinity finale - four nested lemniscates that never stop moving
-*New: 9 cards (from 4) with tiled, continuous SVG paths
-*New: Orange theme is now the single/main version
-*Removed: Color version and the theme toggle switch
-*Fixed: Blur on an oversized surface froze every scroll animation (Fix #19)
-*Fixed: Hero letter-spacing animation that never applied (Fix #22)
+*New: Numbered cards 1-9 (#card1-#card9) replacing the uniform HTML title (Fix #25)*
+*Removed: Hero wave texture and page-wide film grain overlay (Fix #24)*
+*Refactored: GPU scroll transforms, viewport-paused finale animations, mobile hero height fix, and dead code cleanup (Fix #24)*
+*New: Full-bleed .dev hero - outlined title, lines emanating from a single source*
+*New: Infinity finale - four nested lemniscates that never stop moving*
+*New: 9 cards (from 4) with tiled, continuous SVG paths*
+*New: Orange theme is now the single/main version*
+*Removed: Color version and the theme toggle switch*
+*Fixed: Blur on an oversized surface froze every scroll animation (Fix #19)*
+*Fixed: Hero letter-spacing animation that never applied (Fix #22)*
 
 ---
 

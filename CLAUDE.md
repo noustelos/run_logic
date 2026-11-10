@@ -44,6 +44,9 @@
   - Εκτέλεσε tests (εάν υπάρχουν) και σύγκρινε αποτελέσματα.
   - Αν δεν υπάρχουν tests, δειξέ το output ή το behavior της αλλαγής.
 
+- **Cache Busting σε CSS / JS**:
+  - Κάθε φορά που τροποποιείς το `css/styles.css` ή το `js/script.js`, αύξησε το `?v=N` στο `index.html` (`href="css/styles.css?v=..."`, `src="js/script.js?v=..."`) ώστε το live site να μη χρειάζεται hard refresh.
+
 - **Γλώσσα**:
   - Οδηγίες και κώδικας στα **Ελληνικά** (εξαιτίας του ότι το project είναι ελληνικό).
   - Χρήσιμοποιεί τεχνικούς όρους στα Αγγλικά όταν χρειάζεται.
@@ -65,13 +68,14 @@
 ## 📝 Pending Tasks
 
 ### High Priority
-- [ ] Διορθώσεις βέλτιστων πρακτικών στον κώδικα
+- [x] Διορθώσεις βέλτιστων πρακτικών στον κώδικα (2026-11-10)
 - [ ] Προσθήκη σχολίων στον κώδικα
 - [ ] Έλεγχος του landing σε πραγματικές συσκευές (το headless δεν επαληθεύει χρονικά animations — βλ. README *Fix #23*)
 
 ### Medium Priority  
 - [x] Προσθήκη νέων καρτών — 9 κάρτες συνολικά (2026-09-05)
-- [x] Hero με full-bleed wave texture και outlined τίτλο (2026-09-06)
+- [x] Hero με outlined τίτλο — αφαιρέθηκε το wave texture και το film grain (2026-11-10)
+- [x] Αλλαγή τίτλων καρτών από `HTML` σε αριθμούς `1`–`9` (`#card1`–`#card9`) (2026-11-10)
 - [x] Infinity finale με 4 ένθετους λημνίσκους (2026-09-06)
 - [ ] Προσθήκη πραγματικού περιεχομένου στις 9 κάρτες (τώρα είναι άδεια placeholders)
 - [ ] Το `// scroll to run` στο hero είναι placeholder copy — να οριστικοποιηθεί
@@ -83,9 +87,13 @@
 
 ---
 
-## 🛠 Setup για Claude Code
+## 🛠 Setup & Περιβάλλον Ανάπτυξης
 
-### Λocal Development
+### Υλικό (Dev Machine)
+- **Συσκευή:** MacBook Air M2, 16GB RAM (Apple Silicon — **όχι** Intel i5)
+- **OS:** macOS
+
+### Local Development
 ```bash
 cd /Users/nikoskaradimas/Desktop/RUN_LOGIC
 python3 -m http.server 8080
