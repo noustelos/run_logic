@@ -5,10 +5,8 @@
  */
 
 /* ========================================
-   Base Styles & Imports
+   Base Styles
    ======================================== */
-@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Source+Code+Pro:ital,wght@0,400..600;1,400..600&display=swap');
-
 * {
     box-sizing: border-box;
 }
@@ -68,7 +66,6 @@ html, body {
 }
 
 body {
-    --tabletVerticaloffset: 0px;
     background: #0f0f0f;
     font-size: 1.2rem;
     font-weight: 400;
@@ -94,19 +91,11 @@ body {
 
 /* ---- Wave motion (used by the finale texture) ----
    Drift slides one full wavelength; because the wave is periodic, the loop
-   closes with no seam. Sway and swell run on the inner group at unrelated
-   periods, so the three rhythms never realign. */
+   closes with no seam. */
 .wave-drift {
     animation-name: waveDrift;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
-}
-
-.wave-sway {
-    animation-name: waveSway, waveSwell;
-    animation-timing-function: ease-in-out;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
 }
 
 @keyframes waveDrift {
@@ -114,19 +103,8 @@ body {
     to   { transform: translateX(var(--drift)); }
 }
 
-@keyframes waveSway {
-    from { transform: translateY(calc(var(--sway) * -1)); }
-    to   { transform: translateY(var(--sway)); }
-}
-
-@keyframes waveSwell {
-    from { opacity: 1; }
-    to   { opacity: 0.45; }
-}
-
 @media (prefers-reduced-motion: reduce) {
-    .wave-drift,
-    .wave-sway {
+    .wave-drift {
         animation: none;
     }
 }
@@ -157,7 +135,6 @@ body {
        get from #htmlMask2, which reveals the gradient only as a ring. */
     color: transparent;
     -webkit-text-stroke: 2px #ff8c42;
-    text-stroke: 2px #ff8c42;
     /* text-shadow still draws from the glyph shape even with a transparent
        fill, so this reads as a faint bloom inside and around the outline. */
     text-shadow:
@@ -222,12 +199,6 @@ body {
 
     .hero-content {
         opacity: 1;
-    }
-}
-
-@media (max-width: 575px) {
-    .hero {
-        height: 440px;
     }
 }
 
@@ -351,10 +322,6 @@ main.js-ready {
     opacity: 0.45;
 }
 
-.card foreignobject {
-    color: #FFF;
-}
-
 .card header,
 .card code {
     display: flex;
@@ -364,6 +331,7 @@ main.js-ready {
     padding: 20px;
     text-overflow: clip;
     background-image: linear-gradient(-45deg, #ff8c42 20%, #ffb366, #ff9955, #ff6600 70%);
+    -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
     text-shadow: none;
@@ -386,18 +354,6 @@ main.js-ready {
     line-height: 20px;
 }
 
-.card code dl {
-    width: 260px;
-}
-
-.card code dd {
-    margin-left: 20px;
-}
-
-.card code div[aria-hidden="true"] {
-    position: unset !important;
-}
-
 /* ========================================
    Card Variants
    ======================================== */
@@ -414,7 +370,8 @@ main.js-ready {
    ======================================== */
 #world3d {
     position: fixed;
-    top: var(--tabletVerticaloffset);
+    top: 0;
+    will-change: transform;
     z-index: -1;
     -webkit-perspective: 1000px;
     perspective: 1000px;

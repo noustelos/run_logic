@@ -18,19 +18,14 @@ let charElements = [];
 let hasWritten = [];
 
 // Initialize when page loads
-window.onload = (event) => {
-    const noJsMessage = document.querySelector('.no-js-message');
-    if (noJsMessage) {
-        noJsMessage.style.display = 'none';
-    }
-
-    const mainElement = document.querySelector('main');
+window.addEventListener("load", () => {
+    const mainElement = select("main");
     if (mainElement) {
-        mainElement.classList.add('js-ready');
+        mainElement.classList.add("js-ready");
     }
 
     init();
-};
+});
 
 function init() {
     // Both the header card (#codepen) and the <code> cards get typed out.
@@ -109,6 +104,8 @@ function setupScrollAnimations() {
         return { use: use, length: path ? path.getTotalLength() : 0 };
     });
 
+    let world3d = select("#world3d");
+
     // Measured against <main>, not <body>: anything added above (the hero)
     // then leaves the packet-to-card alignment untouched.
     ScrollTrigger.create({
@@ -120,15 +117,16 @@ function setupScrollAnimations() {
             lines.forEach((line) => {
                 gsap.set(line.use, { strokeDashoffset: -line.length * thisProgress });
             });
-            let tabletVerMovement = 0.65 * window.innerHeight;
-            let scrollProgress2 = - parseInt(tabletVerMovement * thisProgress) + "px";
-            gsap.set("body", { "--tabletVerticaloffset": scrollProgress2 });
+            if (world3d) {
+                let tabletVerMovement = 0.65 * window.innerHeight;
+                world3d.style.transform = `translate3d(0, ${(-tabletVerMovement * thisProgress).toFixed(2)}px, 0)`;
+            }
         }
     });
 }
 
 function buildWaves(group, config) {
-    // Layered sine bands, shared by the hero and the finale.
+    // Layered sine bands for the finale texture.
     //
     // The motion is CSS, not GSAP, on purpose. These loops are decorative and
     // owe nothing to scroll position, and GSAP drives everything from one
@@ -143,23 +141,10 @@ function buildWaves(group, config) {
     let step = 16;
 
     for (let b = 0; b < config.bands; b++) {
-        // Two nested groups: one element can only animate transform once, and
-        // the drift and the sway need separate periods.
         let drift = document.createElementNS(SVG_NS, "g");
         drift.setAttribute("class", "wave-drift");
         drift.style.setProperty("--drift", (b % 2 === 0 ? -config.wavelength : config.wavelength) + "px");
         drift.style.animationDuration = (config.duration + b * 7) + "s";
-
-        let inner = document.createElementNS(SVG_NS, "g");
-
-        if (config.sway) {
-            inner.setAttribute("class", "wave-sway");
-            inner.style.setProperty("--sway", config.sway + "px");
-            // Sway and swell on periods that share no common multiple with the
-            // drift, so the band never resettles into the same arrangement.
-            inner.style.animationDuration = (config.swayDuration + b * 2.6).toFixed(2) + "s, "
-                                          + (config.swayDuration * 0.78 + b * 1.7).toFixed(2) + "s";
-        }
 
         for (let k = 0; k < config.perBand; k++) {
             let i = b * config.perBand + k;
@@ -176,10 +161,9 @@ function buildWaves(group, config) {
             let path = document.createElementNS(SVG_NS, "path");
             path.setAttribute("d", points.join(" "));
             path.setAttribute("opacity", (config.opacity + (i % 4) * config.opacityStep).toFixed(3));
-            inner.appendChild(path);
+            drift.appendChild(path);
         }
 
-        drift.appendChild(inner);
         group.appendChild(drift);
     }
 }
@@ -244,34 +228,60 @@ function setupInfinity() {
         }
     });
 
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        return;
+    }
+
     // Once drawn the finale never settles: a light laps each loop and the
     // strokes breathe. Every loop runs at its own tempo, so the four of them
     // drift permanently in and out of phase instead of pulsing as one.
+    let ambientTweens = [];
+
     runners.forEach((runner, i) => {
-        gsap.to(runner, {
+        ambientTweens.push(gsap.to(runner, {
             strokeDashoffset: "-=" + lengths[i],
             duration: 6.5 + i * 1.6,
             ease: "none",
-            repeat: -1
-        });
+            repeat: -1,
+            paused: true
+        }));
     });
 
     loops.forEach((loop, i) => {
-        gsap.to(loop, {
+        ambientTweens.push(gsap.to(loop, {
             strokeWidth: 2.1,
             duration: 2.4 + i * 0.5,
             delay: i * 0.35,
             ease: "sine.inOut",
             repeat: -1,
-            yoyo: true
-        });
+            yoyo: true,
+            paused: true
+        }));
     });
 
-    gsap.to("#infHalo", {
+    ambientTweens.push(gsap.to("#infHalo", {
         opacity: 0.55,
         duration: 4.5,
         ease: "sine.inOut",
         repeat: -1,
-        yoyo: true
+        yoyo: true,
+        paused: true
+    }));
+
+    // Only run the 9 infinite tweens inside the blurred #svgFinale surface
+    // when the finale is near or inside the viewport.
+    ScrollTrigger.create({
+        trigger: "#svgFinale",
+        start: "top bottom+=200",
+        end: "bottom top",
+        onToggle: (self) => {
+            ambientTweens.forEach((tween) => {
+                if (self.isActive) {
+                    tween.play();
+                } else {
+                    tween.pause();
+                }
+            });
+        }
     });
 }
