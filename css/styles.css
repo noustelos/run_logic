@@ -122,9 +122,7 @@ body {
 
 .hero-title {
     margin: 0;
-    /* The cards spell HTML with a drawn path, not a typeface: narrow, heavy,
-       flat terminals (the H is 44x109 units). Big Shoulders Display is the
-       closest match on the same axis - condensed industrial grotesque. */
+    /* Condensed industrial grotesque matching the drawn number paths on the cards. */
     font-family: "Big Shoulders Display", "Anton", sans-serif;
     font-weight: 700;
     font-size: clamp(58px, 10.5vw, 126px);
@@ -132,7 +130,7 @@ body {
     letter-spacing: 0.012em;
     text-transform: uppercase;
     /* Hollow letters with a thin orange edge - the same treatment the cards
-       get from #htmlMask2, which reveals the gradient only as a ring. */
+       get from their number masks, which reveal the gradient only as a ring. */
     color: transparent;
     -webkit-text-stroke: 2px #ff8c42;
     /* text-shadow still draws from the glyph shape even with a transparent
@@ -355,15 +353,27 @@ main.js-ready {
 }
 
 /* ========================================
-   Card Variants
+   Card Variants (Numbers 1-9)
    ======================================== */
-.card {
-    mask-image: url(#block), url(#htmlMask);
-}
+#card1 { mask-image: url(#block), url(#num1Mask); }
+#card2 { mask-image: url(#block), url(#num2Mask); }
+#card3 { mask-image: url(#block), url(#num3Mask); }
+#card4 { mask-image: url(#block), url(#num4Mask); }
+#card5 { mask-image: url(#block), url(#num5Mask); }
+#card6 { mask-image: url(#block), url(#num6Mask); }
+#card7 { mask-image: url(#block), url(#num7Mask); }
+#card8 { mask-image: url(#block), url(#num8Mask); }
+#card9 { mask-image: url(#block), url(#num9Mask); }
 
-.card::before {
-    mask: url(#htmlMask2);
-}
+#card1::before { mask: url(#num1Mask2); }
+#card2::before { mask: url(#num2Mask2); }
+#card3::before { mask: url(#num3Mask2); }
+#card4::before { mask: url(#num4Mask2); }
+#card5::before { mask: url(#num5Mask2); }
+#card6::before { mask: url(#num6Mask2); }
+#card7::before { mask: url(#num7Mask2); }
+#card8::before { mask: url(#num8Mask2); }
+#card9::before { mask: url(#num9Mask2); }
 
 /* ========================================
    3D World Background
